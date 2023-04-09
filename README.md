@@ -6,10 +6,22 @@ such as parallax scrolling, horizontal and vertical scrolling, and more!
 
 ## Installation
 
+\
 It's nothing special just ⌨️ \
 `npm install fullslide`
 
 ## Documentation
+
+FullSlide Config
+
+```js
+FullSlide({
+  animated: true, // When true, animation not trigger. you can do your own 🔥
+  triggerDistance: 30, // distance in % when changePage and animation trigger
+});
+```
+
+How to use
 
 ```js
 import './styles/style.scss';
@@ -23,6 +35,7 @@ onInteractionStart((e) => {
   e.pages; // Array of all pages
   e.distance; // Distance from start position to current position
   e.percentage; // Distance in %
+
   // Every event has the same payload
   console.log('onInteractionStart', e); //Fired when user start "scrolling"
 });

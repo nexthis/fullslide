@@ -5,6 +5,7 @@
   "main": "lib/FullSlide.umd.cjs",
   "module": "lib/FullSlide.js",
   "types": "lib/index.d.ts",
+
   "files": [
     "lib/**/*"
   ],
@@ -12,6 +13,7 @@
     "name": "Paweł Romanowski",
     "url": "https://pawel-romanowski.pl/"
   },
+  "keywords": ["typescript", "library", "fullslide", "slider", "easy-to-use", "simple"],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
