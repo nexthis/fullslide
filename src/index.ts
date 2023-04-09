@@ -40,10 +40,10 @@ const defaultConfig: Config = {
 }
 
 
-export default function (config: Config = defaultConfig) {
+export default function (props: Partial<Config> = {} ) {
+  const config: Config = {...defaultConfig, ...props}
   const { onPaginate, paginate, destroy: destroyPaginate } = Paginate();
-
-
+  
   const fullslide = document.querySelector<HTMLDialogElement>('.fullslide')!;
   const pages = document.querySelectorAll<HTMLDialogElement>('.fullslide__page')!;
 

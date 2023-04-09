@@ -12,6 +12,8 @@ It's nothing special just ⌨️ \
 
 ## Documentation
 
+**example**: https://codesandbox.io/s/fullslide-ml7osr?file=/src/index.ts
+
 FullSlide Config
 
 ```js
