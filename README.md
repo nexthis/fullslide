@@ -4,6 +4,10 @@ FullSlide is a lightweight and easy-to-use JavaScript library that allows you to
 The library provides a simple and intuitive API that enables you to customize your website's scrolling behavior and create stunning effects,
 such as parallax scrolling, horizontal and vertical scrolling, and more!
 
+## Installation
+
+It's nothing special just ⌨️ \
+`npm install fullslide`
 
 ## Documentation
 
