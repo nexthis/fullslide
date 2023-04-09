@@ -4,7 +4,6 @@ import FullSlide from '.';
 const { onPaginate, onInteractionStart, onInteractionStop, onInteract, onPageChanged, changePage } = FullSlide();
 
 
-
 onInteractionStart((e) => {
  e.current // Current page (HTML Element)
  e.next // Next page - in some case may be the same as current  (HTML Element)

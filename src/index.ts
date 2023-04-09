@@ -1,4 +1,5 @@
-import { gsap } from 'gsap';
+import { animate } from "motion"
+
 import Paginate from './paginate';
 import { clamp, debounce, throttle } from './utils';
 
@@ -122,9 +123,9 @@ export default function (props: Partial<Config> = {} ) {
 
     const distance = point.y - startPoint.y;
 
-    gsap.set(pages, {
-      transform: `translate(0, ${distance + -(window.innerHeight * currentPage)}px)`,
-    });
+    for (const item of pages) {
+      item.style.transform =  `translate(0, ${distance + -(window.innerHeight * currentPage)}px)`
+    }
 
     if (Math.round((Math.abs(distance) / window.innerHeight) * 100) >= config.triggerDistance) {
       changePage(distance > 0 ? -1 : 1, true);
@@ -173,9 +174,7 @@ export default function (props: Partial<Config> = {} ) {
     }
 
     if(config.animated){
-      gsap.to(pages, {
-        transform: `translate(0, -${window.innerHeight * currentPage}px)`
-      });
+      animate(pages, { transform: `translate(0, -${window.innerHeight * currentPage}px)`}, {easing: "ease", duration: 0.3})
     }
 
     if(!isSame){

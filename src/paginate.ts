@@ -1,4 +1,4 @@
-import { gsap } from 'gsap';
+import { timeline } from 'motion';
 
 type Position = 'horizontal' | 'vertical';
 type PaginateEvent = (value: number) => void;
@@ -37,7 +37,6 @@ export default function () {
     const direction = value - index;
     const mode = pagination.classList.contains(config.horizontalClass);
     const cursorSize = itemSize * space;
-    const tl = gsap.timeline();
 
     // Avoiding bug when user click in the same position
     if (index === value) {
@@ -45,22 +44,44 @@ export default function () {
     }
 
     if (direction > 0) {
-      tl.to(cursor, 0.2, {
-        [mode ? 'width' : 'height']: cursorSize,
-        borderRadius: `${cursorSize / 2}px`,
-      }).to(cursor, 0.2, {
-        [mode ? 'x' : 'y']: value * itemSize,
-        [mode ? 'width' : 'height']: defaultCursorSize,
-      });
+      timeline([
+        [
+          cursor,
+          {
+            [mode ? 'width' : 'height']: `${cursorSize}px`,
+            borderRadius: `${cursorSize / 2}px`,
+          },
+          { duration: 0.2 },
+        ],
+        [
+          cursor,
+          {
+            [mode ? 'x' : 'y']: value * itemSize,
+            [mode ? 'width' : 'height']: `${defaultCursorSize}px`,
+          },
+          { duration: 0.2 },
+        ],
+      ]);
     } else {
-      tl.to(cursor, 0.2, {
-        [mode ? 'x' : 'y']: value * itemSize,
-        [mode ? 'width' : 'height']: cursorSize,
-        borderRadius: `${cursorSize / 2}px`,
-      }).to(cursor, 0.2, {
-        [mode ? 'x' : 'y']: value * itemSize,
-        [mode ? 'width' : 'height']: defaultCursorSize,
-      });
+      timeline([
+        [
+          cursor,
+          {
+            [mode ? 'x' : 'y']: value * itemSize,
+            [mode ? 'width' : 'height']: `${cursorSize}px`,
+            borderRadius: `${cursorSize / 2}px`,
+          },
+          { duration: 0.2 },
+        ],
+        [
+          cursor,
+          {
+            [mode ? 'x' : 'y']: value * itemSize,
+            [mode ? 'width' : 'height']: `${defaultCursorSize}px`,
+          },
+          { duration: 0.2 },
+        ],
+      ]);
     }
 
     index = value;

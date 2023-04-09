@@ -6,7 +6,6 @@ such as parallax scrolling, horizontal and vertical scrolling, and more!
 
 ## Installation
 
-\
 It's nothing special just ⌨️ \
 `npm install fullslide`
 
