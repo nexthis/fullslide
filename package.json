@@ -1,6 +1,6 @@
 {
   "name": "fullslide",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "type": "module",
   "main": "lib/FullSlide.umd.cjs",
   "module": "lib/FullSlide.js",
