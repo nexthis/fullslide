@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import eslint from 'vite-plugin-eslint';
 import dts from 'vite-plugin-dts';
 import path from "path";
 
@@ -7,9 +8,9 @@ const isDev = process.env.NODE_ENV === "development";
 console.log(isDev);
 
 export default defineConfig({
-    plugins: [dts()],
+    plugins: [ dts(), eslint() ],
     esbuild: {
-        drop: ['console', 'debugger'] , //isDev ? ['console', 'debugger'] : [],
+        drop: isDev ? ['console', 'debugger'] : [],
     },
     build: {
         outDir: path.join(__dirname, "lib"),

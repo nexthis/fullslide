@@ -101,7 +101,7 @@ export default function () {
     lastPoint.y = point.y;
   }
 
-  function changePage(page: number, relative: boolean = false) {
+  function changePage(page: number, relative = false) {
     if (relative) {
       currentPage = clamp(currentPage + page, 0, maxPage);
     } else {
