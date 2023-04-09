@@ -6,7 +6,7 @@ export function debounce<F extends (...params: any[]) => void>(fn: F, delay: num
   } as F;
 }
 
-export function throttle(fn: (args: any[]) => void, wait: number) {
+export function throttle(fn: (...args: any) => void, wait: number) {
   let isCalled = false;
 
   return (...args: any[])  => {
