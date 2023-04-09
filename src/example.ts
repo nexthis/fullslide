@@ -1,17 +1,12 @@
-import "./styles/style.scss";
-import FullSlide from "./main"
+import './styles/style.scss';
+import FullSlide from '.';
 
-
-const { changePage, onPaginate, destroy, onInteractionStart } = FullSlide()
-
+const { onPaginate, onInteractionStart } = FullSlide();
 
 onInteractionStart(() => {
-    console.log("asdasd");
-    
-})
-
+  console.log('asdasd');
+});
 
 onPaginate((page) => {
-    console.log(page);
-    
-})
+  console.log(page);
+});
