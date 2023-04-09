@@ -5,12 +5,10 @@ import path from "path";
 
 const isDev = process.env.NODE_ENV === "development";
 
-console.log(isDev);
-
 export default defineConfig({
     plugins: [ dts(), eslint() ],
     esbuild: {
-        drop: isDev ? ['console', 'debugger'] : [],
+        drop: isDev ?  [] : ['console', 'debugger'],
     },
     build: {
         outDir: path.join(__dirname, "lib"),

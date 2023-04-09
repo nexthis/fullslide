@@ -12,6 +12,7 @@ $font: 1.6rem;
     writing-mode: vertical-rl;
     text-align: center;
     display: block;
+    line-height: $font + 0.4rem;
     margin: auto;
     font-size: $font;
     color: white;

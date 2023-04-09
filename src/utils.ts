@@ -9,7 +9,7 @@ export function debounce<F extends (...params: any[]) => void>(fn: F, delay: num
 export function throttle(fn: (...args: any) => void, wait: number) {
   let isCalled = false;
 
-  return (...args: any[])  => {
+  return (...args: any)  => {
     if (!isCalled) {
       fn(...args);
       isCalled = true;

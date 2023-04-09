@@ -13,9 +13,6 @@
     &__page{
         height: 100%;
         width: 100%;
-        &:nth-child(odd){
-            background-color: #141414;
-        }
         &--center{
             display: flex;
             align-items: center;
