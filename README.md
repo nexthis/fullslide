@@ -19,6 +19,7 @@ FullSlide Config
 FullSlide({
   animated: true, // When true, animation not trigger. you can do your own 🔥
   triggerDistance: 30, // distance in % when changePage and animation trigger
+  fixMobileBare: true, // Add class in html and body to helps support mobile device 
 });
 ```
 
