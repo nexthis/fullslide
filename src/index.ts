@@ -1,4 +1,4 @@
-import { animate } from "motion"
+import { animate } from 'motion';
 
 import Paginate from './paginate';
 import { clamp, debounce, throttle } from './utils';
@@ -17,36 +17,36 @@ interface EventEmitter {
   interact: Array<InteractionStopEvent>;
   start: Array<InteractionStartEvent>;
   stop: Array<InteractEvent>;
-  change: Array<PageChangeEvent>
+  change: Array<PageChangeEvent>;
 }
 
 interface EventPayload {
-  current: Element,
-  next: Element,
-  pages: Element[],
-  page: number,
-  distance: number,
-  percentage: number,
+  current: Element;
+  next: Element;
+  pages: Element[];
+  page: number;
+  distance: number;
+  percentage: number;
 }
 
 interface Config {
-  animated: boolean,
-  triggerDistance: number,
+  animated: boolean;
+  triggerDistance: number;
+  fixMobileBare: boolean;
 }
-
 
 const defaultConfig: Config = {
   animated: true,
-  triggerDistance: 30
-}
+  triggerDistance: 30,
+  fixMobileBare: true,
+};
 
-
-export default function (props: Partial<Config> = {} ) {
-  const config: Config = {...defaultConfig, ...props}
+export default function (props: Partial<Config> = {}) {
+  const config: Config = { ...defaultConfig, ...props };
   const { onPaginate, paginate, destroy: destroyPaginate } = Paginate();
-  
+
   const fullslide = document.querySelector<HTMLDialogElement>('.fullslide')!;
-  const pages = document.querySelectorAll<HTMLDialogElement>('.fullslide__page')!;
+  const pages = Array.from(document.querySelectorAll<HTMLDialogElement>('.fullslide__page')!);
 
   let block = false;
   let currentPage = 0;
@@ -54,7 +54,6 @@ export default function (props: Partial<Config> = {} ) {
   const startPoint: Point = { x: 0, y: 0 };
   const lastPoint: Point = { x: 0, y: 0 };
   const eventEmitter: EventEmitter = { interact: [], start: [], stop: [], change: [] };
-
 
   const onInteractionStartInternal = (e: MouseEvent | TouchEvent) => {
     const [x, y] = e instanceof MouseEvent ? [e.clientX, e.clientY] : [e.touches[0].clientX, e.touches[0].clientY];
@@ -66,7 +65,6 @@ export default function (props: Partial<Config> = {} ) {
 
     lastPoint.x = point.x;
     lastPoint.y = point.y;
-
 
     onInteractionStart.call(null, eventEmitter.start[0]);
   };
@@ -81,7 +79,6 @@ export default function (props: Partial<Config> = {} ) {
     calculate(point);
   }, 10);
 
-
   const onInteractionStopInternal = () => {
     block = false;
     changePage(currentPage);
@@ -89,10 +86,16 @@ export default function (props: Partial<Config> = {} ) {
     onInteractionStop.call(null, eventEmitter.stop[0]);
   };
 
-  const onWheelInternal = debounce((e: WheelEvent) => {
+  const onInputInternal = debounce((e: WheelEvent | KeyboardEvent) => {
     onInteractionStart.call(null, eventEmitter.start[0]);
+    const keyMap = { ArrowUp: -1, ArrowDown: 1 };
 
-    const delta = Math.sign(e.deltaY);
+    const delta = e instanceof WheelEvent ? Math.sign(e.deltaY) : keyMap[e.key as keyof typeof keyMap] ?? 0;
+
+    if (e instanceof KeyboardEvent && delta === 0) {
+      return;
+    }
+
     changePage(delta, true);
 
     onInteractionStop.call(0, eventEmitter.stop[0]);
@@ -113,8 +116,10 @@ export default function (props: Partial<Config> = {} ) {
   window.addEventListener('mousemove', onInteractInternal);
 
   window.addEventListener('resize', onResizeInternal);
-  document.addEventListener('wheel', onWheelInternal);
+  document.addEventListener('wheel', onInputInternal);
+  document.addEventListener('keydown', onInputInternal);
   onResizeInternal();
+  makeSupportCssClass()
 
   function calculate(point: Point) {
     if (block) {
@@ -123,8 +128,8 @@ export default function (props: Partial<Config> = {} ) {
 
     const distance = point.y - startPoint.y;
 
-    for (const item of Array.from(pages) ) {
-      item.style.transform =  `translate(0, ${distance + -(window.innerHeight * currentPage)}px)`
+    for (const item of Array.from(pages)) {
+      item.style.transform = `translate(0, ${distance + -(window.innerHeight * currentPage)}px)`;
     }
 
     if (Math.round((Math.abs(distance) / window.innerHeight) * 100) >= config.triggerDistance) {
@@ -137,18 +142,26 @@ export default function (props: Partial<Config> = {} ) {
     lastPoint.y = point.y;
   }
 
-
-  function makeEventPayload(): EventPayload{
-    const delta = Math.sign(lastPoint.y - startPoint.y);
+  function makeSupportCssClass() {
+    console.log(config.fixMobileBare);
     
+    if(config.fixMobileBare){
+      document.body.classList.add("fullslide-body")
+      document.querySelector("html")!.classList.add("fullslide-html")
+    }
+  }
+
+  function makeEventPayload(): EventPayload {
+    const delta = Math.sign(lastPoint.y - startPoint.y);
+
     return {
-      pages: Array.from(pages) ,
+      pages: pages,
       current: pages[currentPage],
       next: pages[clamp(currentPage - delta, 0, maxPage)],
       page: currentPage,
       distance: lastPoint.y - startPoint.y,
-      percentage: Math.round((Math.abs(lastPoint.y) / window.innerHeight) * 100)
-    }
+      percentage: Math.round((Math.abs(lastPoint.y) / window.innerHeight) * 100),
+    };
   }
 
   onPaginate((page) => {
@@ -156,13 +169,13 @@ export default function (props: Partial<Config> = {} ) {
   });
 
   // ****************
-  //    Public API 
+  //    Public API
   // ****************
 
   /**
    * Change slide to another one
    * @param page - number of the page
-   * @param relative - if true page value will be added from the current page, so you can use eg: -1 or 1 in page value 
+   * @param relative - if true page value will be added from the current page, so you can use eg: -1 or 1 in page value
    */
   function changePage(page: number, relative = false) {
     const isSame = currentPage === page;
@@ -173,11 +186,15 @@ export default function (props: Partial<Config> = {} ) {
       currentPage = clamp(page, 0, maxPage);
     }
 
-    if(config.animated){
-      animate(pages, { transform: `translate(0, -${window.innerHeight * currentPage}px)`}, {easing: "ease", duration: 0.3})
+    if (config.animated) {
+      animate(
+        pages,
+        { transform: `translate(0, -${window.innerHeight * currentPage}px)` },
+        { easing: 'ease', duration: 0.3 },
+      );
     }
 
-    if(!isSame){
+    if (!isSame) {
       onPageChanged.call(0, eventEmitter.change[0]);
     }
 
@@ -197,7 +214,8 @@ export default function (props: Partial<Config> = {} ) {
     window.removeEventListener('mousemove', onInteractInternal);
 
     window.removeEventListener('resize', onResizeInternal);
-    document.removeEventListener('wheel', onWheelInternal);
+    document.removeEventListener('wheel', onInputInternal);
+    document.removeEventListener('keydown', onInputInternal);
     destroyPaginate();
   }
 
@@ -214,7 +232,6 @@ export default function (props: Partial<Config> = {} ) {
   }
 
   function onInteractionStop(fn: InteractionStopEvent) {
-
     if (eventEmitter.stop) {
       for (const event of eventEmitter.stop) {
         event(makeEventPayload());
@@ -233,7 +250,7 @@ export default function (props: Partial<Config> = {} ) {
       }
     }
 
-    if (fn &&  !eventEmitter.interact.includes(fn)) {
+    if (fn && !eventEmitter.interact.includes(fn)) {
       eventEmitter.interact.push(fn);
     }
   }

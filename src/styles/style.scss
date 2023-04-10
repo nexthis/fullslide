@@ -1,3 +1,7 @@
 //@see https://www.youtube.com/watch?v=pVLBdoGKk4o
-@import "paginate";
-@import "fullslide";
+@import 'paginate';
+@import 'fullslide';
+
+body {
+  overscroll-behavior: none;
+}

@@ -1,9 +1,15 @@
 
-
-.fullslide-body{
-
+.fullslide-html {
+    overflow: hidden;
+    width: 100%;
 }
 
+.fullslide-body{
+    height: 100%;
+    position: fixed;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+}
 
 .fullslide {
     overflow: hidden;

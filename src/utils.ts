@@ -1,15 +1,15 @@
-export function debounce<F extends (...params: any[]) => void>(fn: F, delay: number) {
+export function debounce<F extends (...params: Array<any>) => void>(fn: F, delay: number) {
   let timeoutID = 0;
-  return function (this: any, ...args: any[]) {
+  return function (this: ThisType<any>, ...args: Array<any>) {
     clearTimeout(timeoutID);
     timeoutID = window.setTimeout(() => fn.apply(this, args), delay);
   } as F;
 }
 
-export function throttle(fn: (...args: any) => void, wait: number) {
+export function throttle<T>(fn: (...args: Array<T>) => void, wait: number) {
   let isCalled = false;
 
-  return (...args: any)  => {
+  return (...args: Array<T>)  => {
     if (!isCalled) {
       fn(...args);
       isCalled = true;
