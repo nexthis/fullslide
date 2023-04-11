@@ -1,6 +1,6 @@
 {
   "name": "fullslide",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "type": "module",
   "main": "lib/FullSlide.cjs",
   "module": "lib/FullSlide.js",
