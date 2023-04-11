@@ -128,7 +128,7 @@ export default function (props: Partial<Config> = {}) {
 
     const distance = point.y - startPoint.y;
 
-    for (const item of Array.from(pages)) {
+    for (const item of pages) {
       item.style.transform = `translate(0, ${distance + -(window.innerHeight * currentPage)}px)`;
     }
 

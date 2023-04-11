@@ -1,8 +1,8 @@
 {
   "name": "fullslide",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "type": "module",
-  "main": "lib/FullSlide.umd.cjs",
+  "main": "lib/FullSlide.cjs",
   "module": "lib/FullSlide.js",
   "types": "lib/index.d.ts",
   "files": [
