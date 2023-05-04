@@ -1,7 +1,7 @@
 import './styles/style.scss';
 import FullSlide from '.';
 
-const { onPaginate, onInteractionStart, onInteractionStop, onInteract, onPageChanged, changePage } = FullSlide();
+const { onPaginate, onInteractionStart, onInteractionStop, onInteract, onPageChanged, changePage } = FullSlide({horizontal: true});
 
 
 onInteractionStart((e) => {

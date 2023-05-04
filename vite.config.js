@@ -17,5 +17,10 @@ export default defineConfig({
             name: 'fullslide',
             fileName: 'FullSlide',
         }
-    }
+    },
+    resolve: {
+        alias: {
+          "@": path.resolve(__dirname, "src"),
+        },
+      },
 })

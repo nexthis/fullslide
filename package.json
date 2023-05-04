@@ -1,13 +1,10 @@
 {
   "name": "fullslide",
   "version": "0.0.10",
-  "type": "module",
-  "main": "lib/FullSlide.cjs",
-  "module": "lib/FullSlide.js",
-  "types": "lib/index.d.ts",
-  "files": [
-    "lib/**/*"
-  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nexthis/fullslide"
+  },
   "author": {
     "name": "Paweł Romanowski",
     "url": "https://pawel-romanowski.pl/"
@@ -19,6 +16,14 @@
     "slider",
     "easy-to-use",
     "simple"
+  ],
+  
+  "type": "module",
+  "main": "lib/FullSlide.cjs",
+  "module": "lib/FullSlide.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/**/*"
   ],
   "scripts": {
     "dev": "vite",
@@ -41,6 +46,6 @@
     "vite-plugin-eslint": "^1.8.1"
   },
   "dependencies": {
-    "motion": "^10.15.5"
+    "motion": "^10.16.0"
   }
 }
